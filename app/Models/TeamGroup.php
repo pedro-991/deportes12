@@ -9,4 +9,6 @@ class TeamGroup extends Model
 {
     /** @use HasFactory<\Database\Factories\TeamGroupFactory> */
     use HasFactory;
+
+    protected $fillable = ['group_id','team_id'];
 }

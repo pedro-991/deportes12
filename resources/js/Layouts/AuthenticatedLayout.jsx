@@ -64,6 +64,22 @@ export default function AuthenticatedLayout({ header, children }) {
                                     Jugadores
                                 </NavLink>
                             </div>
+                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                <NavLink
+                                    href={route('admin.groups.index')}
+                                    active={route().current('admin.groups.*')}
+                                >
+                                    Grupos
+                                </NavLink>
+                            </div>
+                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                <NavLink
+                                    href={route('admin.partidos.index')}
+                                    active={route().current('admin.partidos.*')}
+                                >
+                                    Partidos
+                                </NavLink>
+                            </div>
 
 
                         </div>
@@ -202,6 +218,23 @@ export default function AuthenticatedLayout({ header, children }) {
                             Jugadores
                         </ResponsiveNavLink>
                     </div>
+                    <div className="space-y-1 pb-3 pt-2">
+                        <ResponsiveNavLink
+                            href={route('admin.groups.index')}
+                            active={route().current('admin.groups.*')}
+                        >
+                            Grupos
+                        </ResponsiveNavLink>
+                    </div>
+                    <div className="space-y-1 pb-3 pt-2">
+                        <ResponsiveNavLink
+                            href={route('admin.partidos.index')}
+                            active={route().current('admin.partidos.*')}
+                        >
+                            Partidos
+                        </ResponsiveNavLink>
+                    </div>
+
 
                     <div className="border-t border-gray-200 pb-1 pt-4">
                         <div className="px-4">

@@ -5,6 +5,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\TournamentController;
 use App\Http\Controllers\TeamController;
+use App\Http\Controllers\GroupController;
+use App\Http\Controllers\PartidosController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -44,6 +46,14 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     
     // Jugadores
     Route::resource('players', PlayerController::class);
+
+    //grupos
+    Route::resource('groups', GroupController::class);
+
+    //partidos
+    Route::resource('partidos', PartidosController::class);
+
+
 });
 
 require __DIR__.'/auth.php';
