@@ -1,0 +1,28 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Sport extends Model
+{
+    /** @use HasFactory<\Database\Factories\SportFactory> */
+    use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'duration',
+        'status',
+        'min_players',
+        'max_players',
+        'denomination',
+        'rules',
+        'logo',
+    ];
+
+    public function tournaments()
+    {
+        return $this->hasMany(Tournament::class);
+    }
+}

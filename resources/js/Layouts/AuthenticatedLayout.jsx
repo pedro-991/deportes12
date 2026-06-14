@@ -23,14 +23,49 @@ export default function AuthenticatedLayout({ header, children }) {
                                 </Link>
                             </div>
 
-                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            {/* <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink
                                     href={route('dashboard')}
                                     active={route().current('dashboard')}
                                 >
                                     Dashboard
                                 </NavLink>
+                            </div> */}
+                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                <NavLink
+                                    href={route('admin.dashboard')}
+                                    active={route().current('admin.dashboard')}
+                                >
+                                    Dashboard
+                                </NavLink>
                             </div>
+                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                <NavLink
+                                    href={route('admin.tournaments.index')}
+                                    active={route().current('admin.tournaments.*')}
+                                >
+                                    Torneos
+                                </NavLink>
+                            </div>
+                            {/* enlace equipos */}
+                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                <NavLink
+                                    href={route('admin.teams.index')}
+                                    active={route().current('admin.teams.*')}
+                                >
+                                    Equipos
+                                </NavLink>
+                            </div>
+                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                <NavLink
+                                    href={route('admin.players.index')}
+                                    active={route().current('admin.players.*')}
+                                >
+                                    Jugadores
+                                </NavLink>
+                            </div>
+
+
                         </div>
 
                         <div className="hidden sm:ms-6 sm:flex sm:items-center">
@@ -127,12 +162,44 @@ export default function AuthenticatedLayout({ header, children }) {
                         ' sm:hidden'
                     }
                 >
-                    <div className="space-y-1 pb-3 pt-2">
+                  {/*   <div className="space-y-1 pb-3 pt-2">
                         <ResponsiveNavLink
                             href={route('dashboard')}
                             active={route().current('dashboard')}
                         >
                             Dashboard
+                        </ResponsiveNavLink>
+                    </div> */}
+                    <div className="space-y-1 pb-3 pt-2">
+                        <ResponsiveNavLink
+                            href={route('admin.dashboard')}
+                            active={route().current('admin.dashboard')}
+                        >
+                            Dashboard
+                        </ResponsiveNavLink>
+                    </div>
+                    <div className="space-y-1 pb-3 pt-2">
+                        <ResponsiveNavLink
+                            href={route('admin.tournaments.index')}
+                            active={route().current('admin.tournaments.*')}
+                        >
+                            Torneos
+                        </ResponsiveNavLink>
+                    </div>
+                    <div className="space-y-1 pb-3 pt-2">
+                        <ResponsiveNavLink
+                            href={route('admin.teams.index')}
+                            active={route().current('admin.teams.*')}
+                        >
+                            Equipos
+                        </ResponsiveNavLink>
+                    </div>
+                    <div className="space-y-1 pb-3 pt-2">
+                        <ResponsiveNavLink
+                            href={route('admin.players.index')}
+                            active={route().current('admin.players.*')}
+                        >
+                            Jugadores
                         </ResponsiveNavLink>
                     </div>
 
