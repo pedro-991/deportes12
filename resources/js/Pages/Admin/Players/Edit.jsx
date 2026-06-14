@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useMemo, useRef } from 'react';
 import { Head, Link, useForm } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 
-export default function Edit({ player = {}, errors = {} }) {
+export default function Edit({ player = {}, teams = [], errors = {} }) {
   const initial = {
     first_name: player.first_name || '',
     last_name: player.last_name || '',
@@ -11,13 +11,44 @@ export default function Edit({ player = {}, errors = {} }) {
     gender: player.gender || 'Male',
     number: player.number || '',
     observations: player.observations || '',
+    team_id: player.team_id ?? null,
   };
 
   const { data, setData, post, processing } = useForm(initial);
 
+  const [query, setQuery] = useState(player.team?.name || '');
+  const [open, setOpen] = useState(false);
+  const containerRef = useRef(null);
+
+  const filtered = useMemo(() => {
+    if (!query) return teams ?? [];
+    const q = query.toLowerCase();
+    return (teams ?? []).filter(t =>
+      (t.name || '').toLowerCase().includes(q) ||
+      (t.city || '').toLowerCase().includes(q)
+    );
+  }, [teams, query]);
+
   useEffect(() => {
     setData(initial);
+    setQuery(player.team?.name || '');
   }, [player]);
+
+  useEffect(() => {
+    function onClick(e) {
+      if (containerRef.current && !containerRef.current.contains(e.target)) setOpen(false);
+    }
+    window.addEventListener('click', onClick);
+    return () => window.removeEventListener('click', onClick);
+  }, []);
+
+  const selected = (teams || []).find(t => t.id === data.team_id) ?? null;
+
+  function choose(team) {
+    setData('team_id', team.id);
+    setQuery(team.name);
+    setOpen(false);
+  }
 
   function handleChange(e) {
     const { name, value, files, type } = e.target;
@@ -142,6 +173,49 @@ export default function Edit({ player = {}, errors = {} }) {
                       className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
                     />
                     {errors.observations && <p className="text-red-600 text-sm mt-1">{errors.observations}</p>}
+                  </div>
+
+                  <div className="md:col-span-2" ref={containerRef}>
+                    <label className="block text-sm font-medium text-gray-700">Equipo</label>
+                    <div className="mt-1 relative">
+                      <input
+                        type="text"
+                        value={query}
+                        onFocus={() => setOpen(true)}
+                        onChange={e => { setQuery(e.target.value); setOpen(true); }}
+                        placeholder="Buscar equipo..."
+                        className="w-full border-gray-300 rounded-md shadow-sm px-3 py-2"
+                        aria-autocomplete="list"
+                      />
+                      <input type="hidden" name="team_id" value={data.team_id ?? ''} />
+                      {open && (
+                        <div className="absolute z-50 mt-1 w-full bg-white border rounded-md shadow-lg max-h-60 overflow-auto">
+                          {filtered.length === 0 ? (
+                            <div className="p-3 text-sm text-gray-500">No se encontraron equipos</div>
+                          ) : (
+                            filtered.map(t => (
+                              <button
+                                key={t.id}
+                                type="button"
+                                onClick={() => choose(t)}
+                                className="w-full text-left px-4 py-2 hover:bg-indigo-50"
+                              >
+                                <div className="flex items-center justify-between">
+                                  <div>
+                                    <div className="text-sm font-medium text-gray-800">{t.name}</div>
+                                    {t.city && <div className="text-xs text-gray-500">{t.city}</div>}
+                                  </div>
+                                  {selected && selected.id === t.id && (
+                                    <div className="text-xs text-indigo-600">Seleccionado</div>
+                                  )}
+                                </div>
+                              </button>
+                            ))
+                          )}
+                        </div>
+                      )}
+                    </div>
+                    {errors.team_id && <p className="text-sm text-red-600 mt-1">{errors.team_id}</p>}
                   </div>
                 </div>
 

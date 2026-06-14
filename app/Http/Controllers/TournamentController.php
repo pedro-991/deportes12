@@ -64,7 +64,7 @@ class TournamentController extends Controller
             'priority' => $request->priority,
             'rules' => $request->rules,
             'sport_id' => $request->sport_id,
-            'organization_id' => auth()->user()->organization_id,
+            'organization_id' => 1,
             'status' => 0, // En proceso
         ]);
 
@@ -85,7 +85,8 @@ class TournamentController extends Controller
         // Verificar permisos
         //$this->authorize('view', $tournament);
 
-        $tournament->load(['sport', 'organization', 'teams', 'groups', 'stages']);
+        //$tournament->load(['sport', 'organization', 'teams', 'groups', 'stages']);
+        $tournament->load(['sport', 'organization', 'teams']);
 
         return Inertia::render('Admin/Tournaments/Show', [
             'tournament' => $tournament,

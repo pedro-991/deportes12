@@ -12,9 +12,9 @@ class DashboardController extends Controller
     public function index()
     {
         $tournaments = Tournament::with(['sport', 'organization'])
-            ->whereHas('organization', function ($query) {
+            /* ->whereHas('organization', function ($query) {
                 $query->where('id', auth()->user()->organization_id);
-            })
+            }) */
             ->orderBy('priority', 'asc')
             ->orderBy('created_at', 'desc')
             ->paginate(10);

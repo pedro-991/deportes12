@@ -110,9 +110,15 @@ class PlayerController extends Controller
         }]); */
 
         //consultar equipo del jugador
-        //$team = PlayerTeam::where('player_id', $player->id)->first();
+        $team = PlayerTeam::where('player_id', $player->id)->first();
         //$team->load(['tournament', 'sport']);
         //$player->team = $team;
+        //consultar equipo del jugador
+        /* $player->load(['teams' => function ($query) {
+            $query->with(['tournament', 'sport']);
+        }]); */
+        //$player->team = $player->teams->first();
+        $player->team = Team::find($team->team_id);
 
         return Inertia::render('Admin/Players/Show', [
             'player' => $player
@@ -124,10 +130,12 @@ class PlayerController extends Controller
      */
     public function edit(Player $player)
     {
-        
+        //consultar teams
+            $teams = Team::All();
 
         return Inertia::render('Admin/Players/Edit', [
             'player' => $player,
+            'teams' => $teams
         ]);
     }
 
@@ -157,6 +165,13 @@ class PlayerController extends Controller
             'number' => $request->number,
             'observations' => $request->observations,
         ]);
+
+        $team_id = $request->team_id;
+        //si el id no existe en la tabla pivote crearlo y si existe actualizarlo
+        PlayerTeam::updateOrCreate(
+            ['player_id' => $player->id],
+            ['team_id' => $team_id]
+        );
 
         return redirect()->route('admin.players.show', $player->id)
             ->with('success', 'Jugador actualizado exitosamente');

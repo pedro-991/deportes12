@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Team;
 use App\Models\Tournament;
 use App\Models\Sport;
+//use App\Models\Player;
+
 use Inertia\Inertia;
 
 class TeamController extends Controller

@@ -11,7 +11,7 @@ class PlayerTeam extends Model
     use HasFactory;
 
      // Ajusta si la migración creó otro nombre de tabla
-    protected $table = 'player_team';
+    protected $table = 'player_teams';
 
     // Campos que se pueden asignar en masa
     protected $fillable = [
