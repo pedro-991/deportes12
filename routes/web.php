@@ -7,6 +7,7 @@ use App\Http\Controllers\TournamentController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\PartidosController;
+use App\Http\Controllers\ResultadosController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -52,6 +53,9 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
 
     //partidos
     Route::resource('partidos', PartidosController::class);
+
+    //resultados
+    Route::resource('resultados', ResultadosController::class);
 
 
 });

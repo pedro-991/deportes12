@@ -11,6 +11,8 @@ export default function AuthenticatedLayout({ header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
 
+    const [showEncuentros, setShowEncuentros] = useState(false);
+
     return (
         <div className="min-h-screen bg-gray-100">
             <nav className="border-b border-gray-100 bg-white">
@@ -64,7 +66,7 @@ export default function AuthenticatedLayout({ header, children }) {
                                     Jugadores
                                 </NavLink>
                             </div>
-                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                           {/*  <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink
                                     href={route('admin.groups.index')}
                                     active={route().current('admin.groups.*')}
@@ -79,6 +81,49 @@ export default function AuthenticatedLayout({ header, children }) {
                                 >
                                     Partidos
                                 </NavLink>
+                            </div>
+                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                <NavLink
+                                    href=""
+                                    active=""
+                                >
+                                    Resultados
+                                </NavLink>
+                            </div> */}
+
+                            {/* Encuentros dropdown */}
+                            <div className="hidden sm:flex sm:items-center sm:ms-6 relative">
+                                <button
+                                    type="button"
+                                    onClick={() => setShowEncuentros(prev => !prev)}
+                                    className={
+                                        'inline-flex items-center px-3 py-2 rounded-md text-sm font-medium focus:outline-none ' +
+                                        (route().current('admin.groups.*') || route().current('admin.partidos.*') || route().current('admin.results.*')
+                                            ? 'text-gray-900'
+                                            : 'text-gray-500')
+                                    }
+                                >
+                                    Encuentros
+                                    <svg className="ms-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={showEncuentros ? "M5 15l7-7 7 7" : "M19 9l-7 7-7-7"} />
+                                    </svg>
+                                </button>
+
+                                {showEncuentros && (
+                                    <div className="absolute left-0 top-full mt-2 w-48 bg-white border rounded-md shadow-lg z-50">
+                                        <div className="py-1">
+                                            <Link href={route('admin.groups.index')} className={'block px-4 py-2 text-sm ' + (route().current('admin.groups.*') ? 'text-blue-600' : 'text-gray-700')}>
+                                                Grupos
+                                            </Link>
+                                            <Link href={route('admin.partidos.index')} className={'block px-4 py-2 text-sm ' + (route().current('admin.partidos.*') ? 'text-blue-600' : 'text-gray-700')}>
+                                                Partidos
+                                            </Link>
+                                            <Link href={route('admin.resultados.index')} className={'block px-4 py-2 text-sm ' + (route().current('admin.resultados.*') ? 'text-blue-600' : 'text-gray-700')}>
+                                                Resultados
+                                            </Link>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
 
 
@@ -232,6 +277,14 @@ export default function AuthenticatedLayout({ header, children }) {
                             active={route().current('admin.partidos.*')}
                         >
                             Partidos
+                        </ResponsiveNavLink>
+                    </div>
+                    <div className="space-y-1 pb-3 pt-2">
+                        <ResponsiveNavLink
+                            href=""
+                            active=""
+                        >
+                            Resultados
                         </ResponsiveNavLink>
                     </div>
 

@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Resultados;
+use App\Models\Group;
+use App\Models\Team;
 
 class Partidos extends Model
 {
@@ -26,4 +29,9 @@ class Partidos extends Model
     {
         return $this->belongsTo(Team::class, 'vs2');
     }
+
+    public function resultados()
+{
+    return $this->hasMany(Resultados::class, 'partido_id');
+}
 }
