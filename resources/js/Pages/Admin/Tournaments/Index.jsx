@@ -1,8 +1,20 @@
 import React from 'react';
 import { Head, Link } from '@inertiajs/react';
+import { Inertia } from '@inertiajs/inertia';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 
 export default function TournamentsIndex({ tournaments }) {
+
+
+    function handleDelete(id) {
+        if (!confirm('¿Eliminar este torneo? Esta acción lo marcará como eliminado.')) return;
+        Inertia.delete(route('admin.tournaments.destroy', id), {
+            onFinish: () => {},
+            preserveScroll: true,
+        });
+    }
+
+
     return (
         <AuthenticatedLayout
            /*  header={
@@ -185,6 +197,27 @@ export default function TournamentsIndex({ tournaments }) {
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                                 </svg>
                                             </Link>
+                                            <button
+                                                type="button"
+                                                onClick={() => handleDelete(tournament.id)}
+                                                className="text-red-600 hover:text-red-800"
+                                                title="Eliminar torneo"
+                                            >
+                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5-4h4m-7 4h10" />
+                                                </svg>
+                                            </button>
+                                            {/* <button
+                                                type="button"
+                                                onClick={() => handleDelete(tournament.id)}
+                                                className="flex items-center text-red-600 hover:text-red-800"
+                                                title="Eliminar torneo"
+                                            >
+                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5-4h4m-7 4h10" />
+                                                </svg>
+                                                <span className="ml-2 text-sm">Eliminar</span>
+                                            </button> */}
                                         </div>
                                     </td>
                                 </tr>

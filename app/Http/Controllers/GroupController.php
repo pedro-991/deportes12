@@ -72,4 +72,16 @@ class GroupController extends Controller
 
         return redirect()->route('admin.groups.index')->with('success', 'Grupos generados correctamente.');
     }
+
+    public function destroy(Group $group)
+    {
+        // Eliminar relaciones en la tabla pivote
+        TeamGroup::where('group_id', $group->id)->delete();
+
+        // Eliminar el grupo
+        $group->delete();
+
+        return redirect()->route('admin.groups.index')
+            ->with('success', 'Grupo eliminado exitosamente');
+    }
 }

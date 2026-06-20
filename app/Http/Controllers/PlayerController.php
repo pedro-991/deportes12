@@ -185,10 +185,10 @@ class PlayerController extends Controller
        
 
         // Verificar si el jugador está asignado a algún equipo
-        if ($player->teams()->count() > 0) {
+        /* if ($player->teams()->count() > 0) {
             return redirect()->back()
                 ->with('error', 'No se puede eliminar el jugador porque está asignado a uno o más equipos');
-        }
+        } */
 
         $player->delete();
 

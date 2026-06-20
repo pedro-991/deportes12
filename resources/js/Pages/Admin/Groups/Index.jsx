@@ -1,8 +1,34 @@
 import React from 'react';
 import { Head, Link } from '@inertiajs/react';
+import { Inertia } from '@inertiajs/inertia';
+import Swal from 'sweetalert2';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 
 export default function Index({ groups = [] }) {
+
+  function handleDelete(id) {
+    Swal.fire({
+      title: '¿Eliminar grupo?',
+      text: 'Esta acción eliminará el grupo y sus enlaces con equipos.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Inertia.delete(route('admin.groups.destroy', id), {
+          onSuccess: () => {
+            Swal.fire('Eliminado', 'Grupo eliminado correctamente.', 'success');
+          },
+          onError: () => {
+            Swal.fire('Error', 'No se pudo eliminar el grupo.', 'error');
+          },
+        });
+      }
+    });
+  }
+
   return (
     <AuthenticatedLayout>
       <Head title="Grupos" />
@@ -27,7 +53,19 @@ export default function Index({ groups = [] }) {
                     <div className="font-semibold">{g.name}</div>
                     <div className="text-xs text-gray-500">{g.description}</div>
                   </div>
-                  <div className="text-sm text-gray-600">{g.teams?.length ?? 0} equipos</div>
+                  <div className="flex items-center gap-3">
+                    <div className="text-sm text-gray-600">{g.teams?.length ?? 0} equipos</div>
+                    <button
+                      type="button"
+                      onClick={() => handleDelete(g.id)}
+                      className="text-red-600 hover:text-red-800"
+                      title="Eliminar grupo"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5-4h4m-7 4h10" />
+                      </svg>
+                    </button>
+                  </div>
                 </div>
                 <ul className="text-sm divide-y divide-gray-100">
                   {(g.teams || []).map((t) => (
